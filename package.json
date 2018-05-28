@@ -1,0 +1,29 @@
+{
+  "name": "stringify",
+  "version": "1.0.0",
+  "description": "Faster JSON stringifier library for JavaScript",
+  "main": "index.js",
+  "scripts": {
+    "test": "node tests",
+    "format": "npx standard --fix"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jkyberneees/stringify.js.git"
+  },
+  "keywords": [
+    "JSON",
+    "stringify",
+    "performance",
+    "parsing"
+  ],
+  "author": "Rolando Santamaria Maso <kyberneees@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jkyberneees/stringify.js/issues"
+  },
+  "homepage": "https://github.com/jkyberneees/stringify.js#readme",
+  "devDependencies": {
+    "standard": "^11.0.1"
+  }
+}
