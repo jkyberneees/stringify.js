@@ -7,7 +7,7 @@ function stringify (o, nested = false) {
   }
 
   if (type === 'array') {
-    const str = o.reduce((acc, e) => acc + stringify(e, true) +  ',', '')
+    const str = o.reduce((acc, e) => acc + stringify(e, true) + ',', '')
     return `[${str.substring(0, str.length - 1)}]`
   }
 
@@ -15,13 +15,13 @@ function stringify (o, nested = false) {
     return stringify(Array.from(o))
   }
 
-  return nested && type !== 'string' ? `${o}` : `"${o}"` 
+  return nested && type !== 'string' ? `${o}` : `"${o}"`
 }
 
 function getType (o) {
   const type = typeof o
   if (type === 'object') {
-    if (null === o) return 'null'
+    if (o === null) return 'null'
     if (undefined === o) return 'undefined'
     if (Array.isArray(o)) return 'array'
     if (o instanceof Set) return 'set'
