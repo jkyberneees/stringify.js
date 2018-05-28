@@ -24,7 +24,7 @@ const smallObject = {
   v: 1.0
 }
 
-const iterations = 100000
+const iterations = 500000
 
 let now = new Date()
 for (let i = 0; i < iterations; i++) {

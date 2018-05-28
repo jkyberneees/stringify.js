@@ -2,13 +2,14 @@ function stringify (o, nested = false) {
   const type = getType(o)
 
   if (type === 'object') {
-    const str = Object.keys(o).reduce((acc, k) => acc + `"${k}":` + stringify(o[k], true) + ',', '')
-    return `{${str.substring(0, str.length - 1)}}`
+    const keys = Object.keys(o)
+    if (!keys.length) return '{}'
+    return keys.reduce((acc, k, index, arr) => `${acc}"${k}":${stringify(o[k], true)}${index + 1 < arr.length ? ',' : '}'}`, '{')
   }
 
   if (type === 'array') {
-    const str = o.reduce((acc, e) => acc + stringify(e, true) + ',', '')
-    return `[${str.substring(0, str.length - 1)}]`
+    if (!o.length) return '[]'
+    return o.reduce((acc, e, index, arr) => `${acc}${stringify(e, true)}${index + 1 < arr.length ? ',' : ']'}`, '[')
   }
 
   if (type === 'set') {
