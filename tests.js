@@ -25,27 +25,28 @@ const smallObject = {
 }
 
 const iterations = 500000
+console.log(`Running ${iterations} iterations each:`)
 
 let now = new Date()
 for (let i = 0; i < iterations; i++) {
   s.stringify(bigObject)
 }
-console.log('stringify.js elapsed time: ', new Date() - now)
+console.log('stringify.js (big object) elapsed time: ', new Date() - now, 'ms')
 
 now = new Date()
 for (let i = 0; i < iterations; i++) {
   native.stringify(bigObject)
 }
-console.log('Native JSON elapsed time: ', new Date() - now)
+console.log('Native JSON (big object) elapsed time: ', new Date() - now, 'ms')
 
 now = new Date()
 for (let i = 0; i < iterations; i++) {
   s.stringify(smallObject)
 }
-console.log('stringify.js elapsed time: ', new Date() - now)
+console.log('stringify.js (small object) elapsed time: ', new Date() - now, 'ms')
 
 now = new Date()
 for (let i = 0; i < iterations; i++) {
   native.stringify(smallObject)
 }
-console.log('Native JSON elapsed time: ', new Date() - now)
+console.log('Native JSON (small object) elapsed time: ', new Date() - now, 'ms')
