@@ -18,39 +18,34 @@ native.parse(s.stringify({
   faster: true
 }))
 
-const bigObject = require('./big-sample.json')
-const smallObject = require('./small-sample.json')
+const samples = [{
+  name: 'big',
+  o: require('./samples/big-sample.json')
+}, {
+  name: 'small',
+  o: require('./samples/small-sample.json')
+}, {
+  name: 'very-small',
+  o: require('./samples/very-small-sample.json')
+}]
 
 const iterations = 500000
 console.log(`Running ${iterations} iterations each:`)
 
-let now = new Date()
+samples.forEach(sample => {
+  console.log(`> Payload size: ${sample.name}`)
+  console.log(`. Using JSON.stringify`)
 
-now = new Date()
-for (let i = 0; i < iterations; i++) {
-  native.stringify(bigObject)
-}
-console.log('Native JSON (big object) elapsed time: ', (new Date() - now) / iterations, 'ms')
+  let now = new Date()
+  for (let i = 0; i < iterations; i++) {
+    native.stringify(sample.o)
+  }
+  console.log('... elapsed time AVG: ', (new Date() - now) / iterations, 'ms')
 
-now = new Date()
-for (let i = 0; i < iterations; i++) {
-  s.stringify(bigObject)
-}
-console.log('stringify.js (big object) elapsed time: ', (new Date() - now) / iterations, 'ms')
-
-now = new Date()
-for (let i = 0; i < iterations; i++) {
-  native.stringify(smallObject)
-}
-console.log('Native JSON (small object) elapsed time: ', (new Date() - now) / iterations, 'ms')
-
-now = new Date()
-for (let i = 0; i < iterations; i++) {
-  s.stringify(smallObject)
-}
-console.log('stringify.js (small object) elapsed time: ', (new Date() - now) / iterations, 'ms')
-
-console.log(s.stringify({
-  json: 'Rocks!',
-  date: new Date()
-}))
+  console.log(`. Using stringify.js`)
+  now = new Date()
+  for (let i = 0; i < iterations; i++) {
+    s.stringify(sample.o)
+  }
+  console.log('... elapsed time AVG: ', (new Date() - now) / iterations, 'ms')
+})
