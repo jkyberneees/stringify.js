@@ -1,22 +1,18 @@
-function stringify (o, nested = false) {
+function rstringify (o) {
   const type = getType(o)
 
+  if (type === 'string' || o instanceof Date) return `"${o}"`
   if (type === 'object') {
     const keys = Object.keys(o)
     if (!keys.length) return '{}'
-    return keys.reduce((acc, k, index, arr) => `${acc}"${k}":${stringify(o[k], true)}${index + 1 < arr.length ? ',' : '}'}`, '{')
+    return keys.reduce((acc, k, index, arr) => `${acc}"${k}":${rstringify(o[k])}${index + 1 < arr.length ? ',' : '}'}`, '{')
   }
-
   if (type === 'array') {
     if (!o.length) return '[]'
-    return o.reduce((acc, e, index, arr) => `${acc}${stringify(e, true)}${index + 1 < arr.length ? ',' : ']'}`, '[')
+    return o.reduce((acc, e, index, arr) => `${acc}${rstringify(e)}${index + 1 < arr.length ? ',' : ']'}`, '[')
   }
 
-  if (type === 'set') {
-    return stringify(Array.from(o))
-  }
-
-  return nested && type !== 'string' ? `${o}` : `"${o}"`
+  return `${o}`
 }
 
 function getType (o) {
@@ -25,12 +21,16 @@ function getType (o) {
     if (o === null) return 'null'
     if (undefined === o) return 'undefined'
     if (Array.isArray(o)) return 'array'
-    if (o instanceof Set) return 'set'
   }
 
   return type
 }
 
 module.exports = {
-  stringify
+  stringify: (o) => {
+    const type = getType(o)
+    if (o === null || o === undefined || type !== 'object') return `"${o}"`
+
+    return rstringify(o)
+  }
 }
