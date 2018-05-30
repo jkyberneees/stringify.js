@@ -25,5 +25,8 @@
   "homepage": "https://github.com/jkyberneees/stringify.js#readme",
   "devDependencies": {
     "standard": "^11.0.1"
+  },
+  "dependencies": {
+    "jsesc": "^2.5.1"
   }
 }

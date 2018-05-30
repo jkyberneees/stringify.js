@@ -1,5 +1,6 @@
 const native = JSON
 const s = require('./index')
+const sfs = require('./sfs')
 
 native.parse(s.stringify('Hello World'))
 native.parse(s.stringify(null))
@@ -29,23 +30,27 @@ const samples = [{
   o: require('./samples/very-small-sample.json')
 }]
 
-const iterations = 500000
+const iterations = 100000
 console.log(`Running ${iterations} iterations each:`)
 
 samples.forEach(sample => {
   console.log(`> Payload size: ${sample.name}`)
-  console.log(`. Using JSON.stringify`)
 
   let now = new Date()
   for (let i = 0; i < iterations; i++) {
     native.stringify(sample.o)
   }
-  console.log('... elapsed time AVG: ', (new Date() - now) / iterations, 'ms')
+  console.log('Using JSON.stringify: ', (new Date() - now) / iterations, 'ms')
 
-  console.log(`. Using stringify.js`)
   now = new Date()
   for (let i = 0; i < iterations; i++) {
     s.stringify(sample.o)
   }
-  console.log('... elapsed time AVG: ', (new Date() - now) / iterations, 'ms')
+  console.log('Using stringify.js: ', (new Date() - now) / iterations, 'ms')
+
+  now = new Date()
+  for (let i = 0; i < iterations; i++) {
+    sfs(sample.o)
+  }
+  console.log('Using stable-fast-stringify: ', (new Date() - now) / iterations, 'ms')
 })
