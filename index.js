@@ -3,6 +3,7 @@ function s (o) {
 
   if (t === 'string' || o instanceof Date) return `"${o}"`
   if (t === 'object') {
+    if (o.toJSON instanceof Function) return s(o.toJSON())
     const keys = Object.keys(o)
     if (!keys.length) return '{}'
     return keys.reduce((acc, k, i, arr) => `${acc}"${k}":${s(o[k])}${i + 1 < arr.length ? ',' : '}'}`, '{')
